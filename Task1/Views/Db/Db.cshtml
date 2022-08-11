@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Task1.Models.Line>
+@{
+    ViewData["Title"] = "Database";
+}
+
+<a href="/" >Back</a> <br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Latin</th>
+            <th>Russian</th>
+            <th>Integer</th>
+            <th>Double</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model )
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => line.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => line.LatinString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => line.RussianString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => line.IntegerNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => line.DoubleNumber)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

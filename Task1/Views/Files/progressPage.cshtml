@@ -1,0 +1,29 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Progress";
+}
+
+<h3>Progress:</h3>
+<div>
+    <progress value="0" max="@Model" id="progress" /> <br />
+</div>
+
+<strong id="value">0</strong> of <strong>@Model</strong>
+
+<script>
+    setInterval(getProcessedAmountAsync, 1000);
+
+    async function getProcessedAmountAsync( ) {
+      const response = await fetch("/api/files/processed");
+
+      if(response.ok == true){
+          const data = await response.json();
+          document.getElementById("progress").value = data;
+          document.getElementById("value").innerHTML = data;
+
+          if (data >= @Model) {
+              window.location.replace("/");
+          }
+      }
+    }
+</script>
