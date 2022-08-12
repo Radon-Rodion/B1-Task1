@@ -17,6 +17,9 @@ namespace Task1.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Gets Lines from database and returns RazorPage with them
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -24,13 +27,20 @@ namespace Task1.Controllers
             return View("Db", linesInDb);
         }
 
+        /// <summary>
+        /// Returns amount of lines added into database from file in ImportFileToDB method
+        /// </summary>
         [HttpGet("processed")]
-        public IActionResult GetCreatedAmount()
+        public IActionResult GetAddedLinesAmount()
         {
             int amount = _dbService.GetProcessedAmount();
             return Json(amount);
         }
 
+        /// <summary>
+        /// Imports Lines from file into database in a new thread. 
+        /// Returns RazorPage with progressBar or redirects back if no DBContext available
+        /// </summary>
         [HttpGet("import")]
         public IActionResult ImportFileToDB(string importedFileName)
         {
@@ -40,13 +50,6 @@ namespace Task1.Controllers
                 return View("progressPage", System.IO.File.ReadAllLines(importedFileName).Count());
             }
             else return Redirect("/");
-        }
-
-        [HttpGet("procedure")]
-        public IActionResult PerformProcedure()
-        {
-            var result = _dbService.PerformProcedure(_context);
-            return Json(result);
         }
     }
 }

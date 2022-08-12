@@ -8,6 +8,7 @@ using Serilog.Events;
 using Task1.Configs;
 using Task1.Services;
 
+//Configuring Serilog logging different info into different files
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()
@@ -20,15 +21,17 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    //Adding services
     var services = builder.Services;
     services.Configure<LineRandomiserConfigs>(builder.Configuration.GetSection("RandomiserOptions"));
 
     services.AddMemoryCache();
+    //AddSingletone to prevent disposing after sending response (because many actions are performed in daemon threads)
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     services.AddSingleton<IRandomiser, LineRandomiser>();
     services.AddSingleton<IFileService, LinesFileService>();
     services.AddSingleton<LinesDbService>();
-    services.AddReact();
+    services.AddReact(); //Frontend mixes react JS and RazorPages
     services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
 
     string connection = builder.Configuration.GetConnectionString("DefaultConnection");

@@ -8,13 +8,20 @@ namespace Task1.Services
 {
     public class LinesDbService
     {
-        object locker = new object();
         private int _processedAmount = 0;
+
+        /// <summary>
+        /// Returns all Lines from database
+        /// </summary>
         public async Task<IEnumerable<Line>> GetAllAsync(ApplicationDbContext context)
         {
             return await context.Lines.ToListAsync();
         }
 
+        /// <summary>
+        /// Converts string representation of Line (format: RandomDate||RandomLatinString||RandomRussianString||RandomInt||RandomDouble||\n)
+        /// into Line object
+        /// </summary>
         public Line GetLineFromString(string stringifiedLine)
         {
             try
@@ -37,21 +44,9 @@ namespace Task1.Services
             }
         }
 
-        public void WriteStringifiedLineWithoutSaving(Line line, ApplicationDbContext context)
-        {
-            context.Add(line);
-        }
-
-        public async Task SaveContextAsync(ApplicationDbContext context)
-        {
-            await context.SaveChangesAsync();
-        }
-
-        public (int integerSum, double medianDouble) PerformProcedure(ApplicationDbContext context)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Gets Lines from file 'fileName' and saves them in database
+        /// </summary>
         public void SaveEachLineFromFile(string fileName, ApplicationDbContext context)
         {
             Interlocked.Exchange(ref _processedAmount, 0);
@@ -63,6 +58,9 @@ namespace Task1.Services
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// Returns amount of lines added into database in SaveEachLineFromFile method
+        /// </summary>
         public int GetProcessedAmount()
         {
             return _processedAmount;

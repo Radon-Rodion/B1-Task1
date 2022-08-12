@@ -9,7 +9,7 @@ namespace Task1.Services
         private const int LATIN_LETTERS_IN_ALPHABET = 26;
         private const int RUSSIAN_LETTERS_IN_ALPHABET = 32; //ё not included
         private Random _random;
-        private Random Rand 
+        private Random Rand  //random integers generator
         {
             get
             {
@@ -27,6 +27,7 @@ namespace Task1.Services
 
         public double GenerateRandomDouble(int minValue, int maxValue, int digitsAfterDot)
         {
+            //Generates random long and moves dot to the left to achieve required digitsAfterDot
             long randomLong = Rand.NextInt64();
             return (randomLong % ((maxValue - minValue) * Math.Pow(10, digitsAfterDot))) * Math.Pow(10, -digitsAfterDot) + minValue;
         }
@@ -42,7 +43,7 @@ namespace Task1.Services
             for (int i = 0; i < length; i++)
             {
                 int randomInt = Rand.Next();
-                if ((randomInt & 0x4000_0000) == 0)
+                if ((randomInt & 0x4000_0000) == 0) //checks third bit from the left (that doesn't influence on letter number)
                 {
                     builder.Append((char)(upperRegisterLetter + randomInt % lettersInAlphabet));
                 }

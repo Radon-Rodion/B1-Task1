@@ -2,7 +2,7 @@
     const response = await fetch("/api/files");
 
     if (response.ok) { // if HTTP-status is 200-299
-        // get the response body (the method explained below)
+        // get the response body
         const responseData = await response.json();
         console.log(responseData);
 
@@ -25,7 +25,7 @@ export async function generateFiles(numberOfFiles, linesInFile, callback) {
     });
 
     if (response.ok) { // if HTTP-status is 200-299
-        // get the response body (the method explained below)
+        // get the response body
         const responseData = await response.json();
         callback(responseData);
     } else {
@@ -37,7 +37,7 @@ export async function getFile(fileName, callback) {
     const response = await fetch(`/api/files/${fileName}`);
 
     if (response.ok) { // if HTTP-status is 200-299
-        // get the response body (the method explained below)
+        // get the response body
         const responseData = await response.json();
         console.log(responseData);
 
@@ -51,7 +51,7 @@ export async function getProcessedAmount(callback) {
     const response = await fetch("/api/files/processed");
 
     if (response.ok) { // if HTTP-status is 200-299
-        // get the response body (the method explained below)
+        // get the response body
         const responseData = await response.json();
         console.log(responseData);
 
@@ -65,7 +65,7 @@ export async function getRemovedLinesAmount(callback) {
     const response = await fetch("/api/files/removed");
 
     if (response.ok) { // if HTTP-status is 200-299
-        // get the response body (the method explained below)
+        // get the response body
         const responseData = await response.json();
         console.log(responseData);
 
